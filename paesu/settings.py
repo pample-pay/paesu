@@ -110,7 +110,7 @@ WSGI_APPLICATION = 'paesu.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'test1',
         'USER' : 'root',
         'PASSWORD' : '12345678',
         'HOST' : 'localhost',

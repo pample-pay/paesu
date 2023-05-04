@@ -5,7 +5,7 @@ from django.db import models
 
 class Paesu_Record(models.Model):
 
-    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, verbose_name='아이디')
+    user_id_p = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, verbose_name='아이디')
     
     # 1. 작성 일자
     date = models.DateField(verbose_name="일자", null=True)
@@ -113,7 +113,7 @@ class Paesu_Record(models.Model):
     advise = models.CharField(max_length=200, verbose_name="지도사항", null=True, blank=True)
 
     def __str__(self):
-        return str(self.user_id)
+        return str(self.user_id_p)
 
     class Meta:
         db_table="PAESU_RECORD_TB"
