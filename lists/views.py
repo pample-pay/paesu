@@ -39,7 +39,7 @@ def ListView(request):
             result = []
             for i in date_str_list:
                 try:
-                    psrecord = Paesu_Record.objects.filter(user_id = request.user).get(date = i)
+                    psrecord = Paesu_Record.objects.filter(user_id_p = request.user).get(date = i)
                     result.append([i,psrecord.diswaste_today,psrecord.diswaste_used,'입력완료'])
                 except:
                     result.append([i,'','','입력필요'])
@@ -66,7 +66,7 @@ def ListView(request):
                 result = []
                 for i in date_str_list:
                     try:
-                        psrecord = Paesu_Record.objects.filter(user_id = User.objects.get(business_name = selected)).get(date = i)
+                        psrecord = Paesu_Record.objects.filter(user_id_p = User.objects.get(business_name = selected)).get(date = i)
                         result.append([i,psrecord.diswaste_today,psrecord.diswaste_used,'입력완료'])
                     except:
                         result.append([i,'','','입력필요'])
@@ -234,7 +234,7 @@ def InsertData(request, date):
             }
 
             Paesu_Record.objects.update_or_create(
-                user_id = request.user,
+                user_id_p = request.user,
                 date = record['date'],
 
                 defaults = updated_values
@@ -247,19 +247,19 @@ def InsertData(request, date):
             try:
                 yesterday = (datetime.datetime.strptime(date, '%Y-%m-%d') - datetime.timedelta(days=1)).strftime('%Y-%m-%d')
                 
-                psrecord = Paesu_Record.objects.filter(user_id = request.user).filter(date = date)
+                psrecord = Paesu_Record.objects.filter(user_id_p = request.user).filter(date = date)
 
 
-                waterworks_prevd = Paesu_Record.objects.filter(user_id = request.user).get(date = yesterday).waterworks_today if Paesu_Record.objects.filter(user_id = request.user).filter(date = yesterday).exists() else 0
+                waterworks_prevd = Paesu_Record.objects.filter(user_id_p = request.user).get(date = yesterday).waterworks_today if Paesu_Record.objects.filter(user_id_p = request.user).filter(date = yesterday).exists() else 0
                 waterworks_prevd = 0 if waterworks_prevd is None else waterworks_prevd
 
-                underwater_prevd = Paesu_Record.objects.filter(user_id = request.user).get(date = yesterday).underwater_today if Paesu_Record.objects.filter(user_id = request.user).filter(date = yesterday).exists() else 0
+                underwater_prevd = Paesu_Record.objects.filter(user_id_p = request.user).get(date = yesterday).underwater_today if Paesu_Record.objects.filter(user_id_p = request.user).filter(date = yesterday).exists() else 0
                 underwater_prevd = 0 if underwater_prevd is None else underwater_prevd
 
-                diswaste_prevd = Paesu_Record.objects.filter(user_id = request.user).get(date = yesterday).diswaste_today if Paesu_Record.objects.filter(user_id = request.user).filter(date = yesterday).exists() else 0
+                diswaste_prevd = Paesu_Record.objects.filter(user_id_p = request.user).get(date = yesterday).diswaste_today if Paesu_Record.objects.filter(user_id_p = request.user).filter(date = yesterday).exists() else 0
                 diswaste_prevd = 0 if diswaste_prevd is None else diswaste_prevd
                 
-                poweruse_prevd = Paesu_Record.objects.filter(user_id = request.user).get(date = yesterday).poweruse_today if Paesu_Record.objects.filter(user_id = request.user).filter(date = yesterday).exists() else 0
+                poweruse_prevd = Paesu_Record.objects.filter(user_id_p = request.user).get(date = yesterday).poweruse_today if Paesu_Record.objects.filter(user_id_p = request.user).filter(date = yesterday).exists() else 0
                 poweruse_prevd = 0 if poweruse_prevd is None else poweruse_prevd
 
                 context = {
@@ -428,7 +428,7 @@ def DownloadExcel(request):
         wb = openpyxl.load_workbook(filename)
         locale.setlocale(locale.LC_TIME, "ko_KR.UTF-8")
 
-        psrecord = Paesu_Record.objects.filter(user_id = User.objects.get(business_name = request.GET['selected_corp'])).get(date = request.GET['selected_date'])
+        psrecord = Paesu_Record.objects.filter(user_id_p = User.objects.get(business_name = request.GET['selected_corp'])).get(date = request.GET['selected_date'])
         date_obj = datetime.datetime.strptime(request.GET['selected_date'], "%Y-%m-%d")
         formatted_date_str = date_obj.strftime("%Y년%m월%d일")
         
@@ -562,7 +562,7 @@ def DownloadExcelAll(request):
         wb = openpyxl.load_workbook(filename)
         locale.setlocale(locale.LC_TIME, "ko_KR.UTF-8")
 
-        psrecord = Paesu_Record.objects.filter(user_id = User.objects.get(business_name = request.GET['selected_corp'])).filter(date__gte = request.GET['start_date'], date__lte = request.GET['end_date'])
+        psrecord = Paesu_Record.objects.filter(user_id_p = User.objects.get(business_name = request.GET['selected_corp'])).filter(date__gte = request.GET['start_date'], date__lte = request.GET['end_date'])
         
         start_date_obj = datetime.datetime.strptime(request.GET['start_date'], "%Y-%m-%d")
         start_formatted_date_str = start_date_obj.strftime("%Y년%m월%d일")
