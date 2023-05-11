@@ -71,8 +71,7 @@
           </label>
         </div>
 
-        <span id="id_error" class="forms_error" style="margin-top: 2px">
-          {{error}}
+        <span id="id_error" class="forms_error" style="margin-top: 2px;">
         </span>
 
         <p class="mt-1 text-muted"></p>
@@ -140,6 +139,8 @@
             <p class="p-ex">(레포트 수신 이메일 입력)</p>
           </label>
         </div>
+        <span id="email_error" class="forms_error" style="margin-top: 2px;">
+        </span>
 
         <p class="mt-1 text-muted"></p>
 
@@ -200,6 +201,11 @@
           </label>
 
         </div>
+
+        <span id="hp_error" class="forms_error" style="margin-top: 2px;">
+        </span>
+
+
         
         <p class="mt-1 text-muted"></p>
 
@@ -218,5 +224,86 @@
     $(document).ready(function () {
       document.getElementById("hp_error").innerHTML = "";
     });
+  </script>
+
+  <script>
+  $(function() {
+    $('[name="user_id"]').blur(function() {
+        var user_id=$('[name="user_id"]').val()
+        
+        document.getElementById("id_error").innerHTML="";
+
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/id-validation",
+            data: {'user_id' : user_id},
+            success: function(response) {
+
+                if (response.data == "exist") {
+                    document.getElementById("id_error").innerHTML=
+                    "중복되는 아이디 입니다. 다른 아이디를 사용해주세요.";
+                }
+                else {
+                    document.getElementById("id_error").innerHTML=
+                    "";
+                }
+                },
+                error: function(error) {
+                    console.log("ID validation error!");
+                }
+            });
+          });
+        });
+
+  $(function() {
+    $('[name="hp"]').blur(function() {
+        var hp=$('[name="hp"]').val()
+
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/hp-validation",
+            data: {'hp' : hp},
+            success: function(response) {
+                if (response.data == "exist") {
+                    document.getElementById("hp_error").innerHTML=
+                    "중복되는 번호입니다.";
+                }
+                else{
+                    document.getElementById("hp_error").innerHTML=
+                    "";
+                }
+            },
+            error: function(error) {
+                console.log("HP validation error!");
+            }
+        });
+      });
+    });
+
+  $(function() {
+    $('[name="user_email"]').blur(function() {
+        var user_email=$('[name="user_email"]').val()
+
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/email-validation",
+            data: {'user_email' : user_email},
+            success: function(response) {
+                if (response.data == "exist") {
+                    document.getElementById("email_error").innerHTML=
+                    "중복되는 이메일입니다. 아이디 찾기를 이용해주세요.";
+                }
+                else{
+                    document.getElementById("email_error").innerHTML=
+                    "";
+                }
+              },
+              error: function(error) {
+                console.log("Email validation error!");
+              }
+            });
+          });
+        });
+
   </script>
 </html>

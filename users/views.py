@@ -3,8 +3,13 @@ from .models import User
 
 from django.contrib import messages, auth
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import FormView
+
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 def register_view(request):
@@ -24,7 +29,7 @@ def register_view(request):
                 business_name = request.POST.get('BusinessName'),
                 business_add = '',
                 business_regnum = request.POST.get('BusinessNumber'),
-                region = '0',
+                region = '0', #지역 redirect 만들어지면 다시 수정
             )
             return redirect('/')
         else:
@@ -113,3 +118,70 @@ class LoginView(FormView):
         '''
         messages.error(self.request, '아이디 또는 비밀번호를 확인해주세요.')
         return super().form_invalid(form)
+
+
+class IdValidation(APIView):
+    '''
+    중복 아이디가 있는지 검증하는 API
+    jquery blur로 AJAX통해 제출.
+    '''
+    def post(self, request):
+        try:
+            user_id = request.data['user_id']
+            try:
+                user = User.objects.get(user_id=user_id)
+            except Exception as e:
+                user = None
+            
+            context = {
+                'data' : "not exist" if user is None else "exist"
+            }
+
+        except KeyError:
+            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return JsonResponse(context)
+        
+class HPValidation(APIView):
+    '''
+    중복 휴대폰 번호가 있는지 검증하는 API
+    jquery blur로 AJAX통해 제출.
+    '''
+    def post(self, request):
+        try:
+            hp = request.data['hp']
+            try:
+                user = User.objects.get(hp=hp)
+            except Exception as e:
+                user = None
+            
+            context = {
+                'data' : "not exist" if user is None else "exist"
+            }
+
+        except KeyError:
+            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return JsonResponse(context)
+        
+class EmailValidation(APIView):
+    '''
+    중복 이메일이 있는지 검증하는 API
+    jquery blur로 AJAX통해 제출.
+    '''
+    def post(self, request):
+        try:
+            email = request.data['user_email']
+            try:
+                user = User.objects.get(email=email)
+            except Exception as e:
+                user = None
+            
+            context = {
+                'data' : "not exist" if user is None else "exist"
+            }
+
+        except KeyError:
+            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return JsonResponse(context)
