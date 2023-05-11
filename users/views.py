@@ -1,5 +1,6 @@
 from .forms import LoginForm
 from .models import User
+from .choices import REGION_CHOICES
 
 from django.contrib import messages, auth
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
@@ -15,6 +16,8 @@ from rest_framework.views import APIView
 def register_view(request):
 
     if request.method == 'POST':
+        
+        my_dict = {x[1]: x[0] for x in REGION_CHOICES}
 
         User.objects.create_user(
             user_id = request.POST['user_id'],
@@ -24,13 +27,16 @@ def register_view(request):
             business_name = request.POST.get('BusinessName'),
             business_add = '',
             business_regnum = request.POST.get('BusinessNumber'),
-            region = '0', #지역 redirect 만들어지면 다시 수정
+            region = my_dict[request.POST.get('area')],
         )
 
         return redirect('/')
 
     else:
-        return render(request, 'users/register.html')
+        context = {
+            'region' : [x[1] for x in REGION_CHOICES],
+        }
+        return render(request, 'users/register.html', context)
 
 
 def logout_view(request):
