@@ -28,8 +28,6 @@
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <link rel="stylesheet" href="{% static 'css/register.css' %}" />
-    <script src="{% static 'js/register.js' %}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   </head>
 
   <body class="text-center">
@@ -62,6 +60,7 @@
             name="user_id"
             maxlength="15"
             oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').replace(/(\..*)\./g, '$1');"
+            required
           />
 
           <label for="floatingInput">
@@ -85,6 +84,7 @@
             placeholder="Password"
             name="password2"
             maxlength="20"
+            required
           />
 
           <label for="floatingPassword2">
@@ -112,6 +112,7 @@
             placeholder="Password"
             name="password1"
             maxlength="20"
+            required
           />
 
           <label for="floatingPassword1"> Password 확인 </label>
@@ -200,9 +201,10 @@
             <p class="p-ex">(하이픈(-)을 제외한 숫자로 입력)</p>
           </label>
         </div>
-
         <p class="mt-1 text-muted"></p>
-
+        <span id="hp_error" class="forms_error" style="margin-top: -10px mt-1">
+          <!--휴대폰 번호 입력 에러메세지-->
+        </span>
         <button class="w-100 btn btn-lg btn-primary btn-color" type="submit">
           회원가입
         </button>
@@ -213,9 +215,6 @@
   </body>
 
   <iframe name="blankifr" style="display: none"></iframe>
-  <script>
-    $(document).ready(function () {
-      document.getElementById("hp_error").innerHTML = "";
-    });
-  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="{% static 'js/register.js' %}"></script>
 </html>

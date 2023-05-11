@@ -88,3 +88,7 @@ $(function() {
         }
     });
 });
+
+$(document).ready(function () {
+    document.getElementById("hp_error").innerHTML = "";
+  });
