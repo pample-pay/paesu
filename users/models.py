@@ -53,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     business_name = models.CharField(max_length=33, verbose_name="사업자상호", null=True)
     business_add = models.CharField(max_length=33, verbose_name="사업자주소", null=True)
-    business_regnum = models.CharField(max_length=33, verbose_name="사업자등록번호", null=True, unique=True)
+    business_regnum = models.CharField(max_length=33, verbose_name="사업자등록번호", null=True)
     region = models.CharField(choices=REGION_CHOICES, max_length=18, verbose_name="지역", null=True)
 
 
