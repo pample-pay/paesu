@@ -128,10 +128,12 @@
             id="area"
             name="area"
             class="form-control form-border select form-select"
-            name="area"
             style="mb-3"
           >
             <option selected hidden value="">지역명</option>
+            {% for rg in region %}
+            <option>{{rg}}</option>
+            {% endfor %}
           </select>
 
           <label for="floatingPassword1"> 지역 선택 </label>
