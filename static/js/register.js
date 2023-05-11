@@ -57,7 +57,7 @@ $(function () {
 
 // 비밀번호 확인
 $(function () {
-  $('[name="password1"]').blur(function () {
+  $('[name="password1"],[name="password2"]').blur(function () {
     var password1 = $('[name="password1"]').val();
     var password2 = $('[name="password2"]').val();
 
