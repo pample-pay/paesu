@@ -19,6 +19,13 @@
     <title>폐수일지(WMS)</title>
   </head>
   <body>
+
+    {% if user.is_authenticated %}
+      <script type="text/javascript">
+        location.href="/list";
+      </script>
+    {% endif %}
+
     <div class="login_box">
       <div class="login_title">폐수일지(WMS)</div>
       <form

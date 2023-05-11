@@ -47,7 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     user_id = models.CharField(max_length=15, verbose_name="아이디", unique=True)
     password = models.CharField(max_length=256, verbose_name="비밀번호")
 
-    hp = models.CharField(max_length=11, verbose_name="휴대폰번호", null=True, unique=True)
+    hp = models.CharField(max_length=11, verbose_name="휴대폰번호", null=True)
     email = models.CharField(max_length=33, verbose_name="이메일", null=True, unique=True)
     level = models.CharField(choices=LEVEL_CHOICES, max_length=18, verbose_name="등급", default=2)
 

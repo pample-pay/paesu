@@ -10,6 +10,6 @@ urlpatterns = [
     path('changeInfo/', views.ChageInfo, name='changeinfo'),
 
     path('api/v1/id-validation', views.IdValidation.as_view(), name='id_validation'), 
-    path('api/v1/hp-validation', views.HPValidation.as_view(), name='hp_validation'), 
+    # path('api/v1/hp-validation', views.HPValidation.as_view(), name='hp_validation'), 
     path('api/v1/email-validation', views.EmailValidation.as_view(), name='email_validation'), 
 ]
