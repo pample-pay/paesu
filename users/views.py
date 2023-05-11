@@ -16,25 +16,18 @@ def register_view(request):
 
     if request.method == 'POST':
 
-        try:
-            user_id = request.POST['user_id']
-            user = User.objects.get(user_id=user_id)
+        User.objects.create_user(
+            user_id = request.POST['user_id'],
+            password= request.POST['password1'],
+            email = request.POST.get('user_email'),
+            hp = request.POST.get('hp'),
+            business_name = request.POST.get('BusinessName'),
+            business_add = '',
+            business_regnum = request.POST.get('BusinessNumber'),
+            region = '0', #지역 redirect 만들어지면 다시 수정
+        )
 
-        except Exception as e:
-            User.objects.create_user(
-                user_id = request.POST['user_id'],
-                password= request.POST['password1'],
-                email = request.POST.get('user_email'),
-                hp = request.POST.get('hp'),
-                business_name = request.POST.get('BusinessName'),
-                business_add = '',
-                business_regnum = request.POST.get('BusinessNumber'),
-                region = '0', #지역 redirect 만들어지면 다시 수정
-            )
-            return redirect('/')
-        else:
-            context = {'error' : '유저 아이디가 이미 존재합니다.'}
-            return render(request, 'users/register.html', context)
+        return redirect('/')
 
     else:
         return render(request, 'users/register.html')
@@ -142,27 +135,27 @@ class IdValidation(APIView):
         else:
             return JsonResponse(context)
         
-class HPValidation(APIView):
-    '''
-    중복 휴대폰 번호가 있는지 검증하는 API
-    jquery blur로 AJAX통해 제출.
-    '''
-    def post(self, request):
-        try:
-            hp = request.data['hp']
-            try:
-                user = User.objects.get(hp=hp)
-            except Exception as e:
-                user = None
+# class HPValidation(APIView):
+#     '''
+#     중복 휴대폰 번호가 있는지 검증하는 API
+#     jquery blur로 AJAX통해 제출.
+#     '''
+#     def post(self, request):
+#         try:
+#             hp = request.data['hp']
+#             try:
+#                 user = User.objects.get(hp=hp)
+#             except Exception as e:
+#                 user = None
             
-            context = {
-                'data' : "not exist" if user is None else "exist"
-            }
+#             context = {
+#                 'data' : "not exist" if user is None else "exist"
+#             }
 
-        except KeyError:
-            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return JsonResponse(context)
+#         except KeyError:
+#             return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+#         else:
+#             return JsonResponse(context)
         
 class EmailValidation(APIView):
     '''
