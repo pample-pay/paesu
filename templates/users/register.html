@@ -33,11 +33,10 @@
   </head>
 
   <body class="text-center">
-
     {% if user.is_authenticated %}
-      <script type="text/javascript">
-        location.href="/list";
-      </script>
+    <script type="text/javascript">
+      location.href = "/list";
+    </script>
     {% endif %}
 
     <main class="form-signin">
@@ -142,7 +141,9 @@
         </div>
 
         <p class="mt-1 text-muted"></p>
-
+        <span id="pw1_error" class="forms_error" style="margin-top: -10px">
+          <!--중복이메일 에러메세지-->
+        </span>
         <!-- 상호 입력 -->
         <div class="form-floating">
           <input
@@ -198,9 +199,8 @@
             <p class="p-name">H.P</p>
             <p class="p-ex">(하이픈(-)을 제외한 숫자로 입력)</p>
           </label>
-
         </div>
-        
+
         <p class="mt-1 text-muted"></p>
 
         <button class="w-100 btn btn-lg btn-primary btn-color" type="submit">
@@ -210,7 +210,6 @@
 
       <a class="before" href="/"> 이전 페이지로 </a>
     </main>
-
   </body>
 
   <iframe name="blankifr" style="display: none"></iframe>
