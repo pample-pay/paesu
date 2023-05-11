@@ -28,16 +28,14 @@
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <link rel="stylesheet" href="{% static 'css/register.css' %}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="{% static 'js/register.js' %}"></script>
+
   </head>
 
   <body class="text-center">
-
     {% if user.is_authenticated %}
-      <script type="text/javascript">
-        location.href="/list";
-      </script>
+    <script type="text/javascript">
+      location.href = "/list";
+    </script>
     {% endif %}
 
     <main class="form-signin">
@@ -63,6 +61,7 @@
             name="user_id"
             maxlength="15"
             oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').replace(/(\..*)\./g, '$1');"
+            required
           />
 
           <label for="floatingInput">
@@ -71,8 +70,7 @@
           </label>
         </div>
 
-        <span id="id_error" class="forms_error" style="margin-top: 2px;">
-        </span>
+        <span id="id_error" class="forms_error" style="margin-top: 2px"> </span>
 
         <p class="mt-1 text-muted"></p>
 
@@ -85,6 +83,7 @@
             placeholder="Password"
             name="password2"
             maxlength="20"
+            required
           />
 
           <label for="floatingPassword2">
@@ -112,6 +111,7 @@
             placeholder="Password"
             name="password1"
             maxlength="20"
+            required
           />
 
           <label for="floatingPassword1"> Password 확인 </label>
@@ -132,6 +132,7 @@
             placeholder="이메일"
             name="user_email"
             maxlength="128"
+            required
           />
 
           <label for="floatingInput">
@@ -139,7 +140,7 @@
             <p class="p-ex">(레포트 수신 이메일 입력)</p>
           </label>
         </div>
-        <span id="email_error" class="forms_error" style="margin-top: 2px;">
+        <span id="email_error" class="forms_error" style="margin-top: 2px">
         </span>
 
         <p class="mt-1 text-muted"></p>
@@ -153,6 +154,7 @@
             placeholder="사업장명"
             name="BusinessName"
             maxlength="110"
+            required
           />
 
           <label for="floatingInput">
@@ -199,15 +201,7 @@
             <p class="p-name">H.P</p>
             <p class="p-ex">(하이픈(-)을 제외한 숫자로 입력)</p>
           </label>
-
         </div>
-
-        <span id="hp_error" class="forms_error" style="margin-top: 2px;">
-        </span>
-
-
-        
-        <p class="mt-1 text-muted"></p>
 
         <button class="w-100 btn btn-lg btn-primary btn-color" type="submit">
           회원가입
@@ -216,94 +210,9 @@
 
       <a class="before" href="/"> 이전 페이지로 </a>
     </main>
-
   </body>
 
   <iframe name="blankifr" style="display: none"></iframe>
-  <script>
-    $(document).ready(function () {
-      document.getElementById("hp_error").innerHTML = "";
-    });
-  </script>
-
-  <script>
-  $(function() {
-    $('[name="user_id"]').blur(function() {
-        var user_id=$('[name="user_id"]').val()
-        
-        document.getElementById("id_error").innerHTML="";
-
-        $.ajax({
-            type: "POST",
-            url: "/api/v1/id-validation",
-            data: {'user_id' : user_id},
-            success: function(response) {
-
-                if (response.data == "exist") {
-                    document.getElementById("id_error").innerHTML=
-                    "중복되는 아이디 입니다. 다른 아이디를 사용해주세요.";
-                }
-                else {
-                    document.getElementById("id_error").innerHTML=
-                    "";
-                }
-                },
-                error: function(error) {
-                    console.log("ID validation error!");
-                }
-            });
-          });
-        });
-
-  $(function() {
-    $('[name="hp"]').blur(function() {
-        var hp=$('[name="hp"]').val()
-
-        $.ajax({
-            type: "POST",
-            url: "/api/v1/hp-validation",
-            data: {'hp' : hp},
-            success: function(response) {
-                if (response.data == "exist") {
-                    document.getElementById("hp_error").innerHTML=
-                    "중복되는 번호입니다.";
-                }
-                else{
-                    document.getElementById("hp_error").innerHTML=
-                    "";
-                }
-            },
-            error: function(error) {
-                console.log("HP validation error!");
-            }
-        });
-      });
-    });
-
-  $(function() {
-    $('[name="user_email"]').blur(function() {
-        var user_email=$('[name="user_email"]').val()
-
-        $.ajax({
-            type: "POST",
-            url: "/api/v1/email-validation",
-            data: {'user_email' : user_email},
-            success: function(response) {
-                if (response.data == "exist") {
-                    document.getElementById("email_error").innerHTML=
-                    "중복되는 이메일입니다. 아이디 찾기를 이용해주세요.";
-                }
-                else{
-                    document.getElementById("email_error").innerHTML=
-                    "";
-                }
-              },
-              error: function(error) {
-                console.log("Email validation error!");
-              }
-            });
-          });
-        });
-
-  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="{% static 'js/register.js' %}"></script>
 </html>
