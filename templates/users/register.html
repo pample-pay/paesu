@@ -28,7 +28,6 @@
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <link rel="stylesheet" href="{% static 'css/register.css' %}" />
-
   </head>
 
   <body class="text-center">
@@ -39,7 +38,7 @@
     {% endif %}
 
     <main class="form-signin">
-      <form method="post" action=".">
+      <form method="post" action="." onsubmit="return onSubmit();">
         {% csrf_token %}
         <img
           class="mb-4"
@@ -55,7 +54,7 @@
         <div class="form-floating">
           <input
             id="floatingInput username"
-            class="form-control"
+            class="form-control form-border"
             type="id"
             placeholder="아이디"
             name="user_id"
@@ -123,11 +122,29 @@
 
         <p class="mt-1 text-muted"></p>
 
+        <!-- 지역 선택 -->
+        <div class="form-floating">
+          <select
+            id="area"
+            name="area"
+            class="form-control form-border select form-select"
+            name="area"
+            style="mb-3"
+          >
+            <option selected hidden value="">지역명</option>
+          </select>
+
+          <label for="floatingPassword1"> 지역 선택 </label>
+        </div>
+        <p class="mt-1 text-muted"></p>
+        <span id="select1_error" class="forms_error" style="margin-top: -10px">
+          <!--select에러메시지-->
+        </span>
         <!--이메일 입력-->
         <div class="form-floating">
           <input
             id="floatingInput user_email"
-            class="form-control"
+            class="form-control form-border"
             type="email"
             placeholder="이메일"
             name="user_email"
@@ -169,7 +186,7 @@
         <div class="form-floating">
           <input
             id="floatingInput BusinessNumber"
-            class="form-control"
+            class="form-control form-border"
             type="text"
             placeholder="사업자번호"
             name="BusinessNumber"
@@ -203,7 +220,10 @@
           </label>
         </div>
 
-        <button class="w-100 btn btn-lg btn-primary btn-color" type="submit">
+        <button
+          class="w-100 btn btn-lg btn-primary btn-color mt-3"
+          type="submit"
+        >
           회원가입
         </button>
       </form>
