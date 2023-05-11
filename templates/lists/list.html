@@ -75,11 +75,11 @@
             <td>{{used}}</td>
             <td>
               {% if status == "입력필요" %}
-              <span class="necessary" onclick="location.href='/insert/{{date}}'" >{{status}}</span>
+              <button class="necessary" onclick="location.href='/insert/{{date}}'" >{{status}}</button>
             </td>
           <td></td>
               {% else %}
-              <span class="complete" onclick="location.href='/insert/{{date}}'" >{{status}}</span>
+              <button class="complete" onclick="location.href='/insert/{{date}}'" >{{status}}</button>
               </td>
               <td><button onclick="location.href='/download-excel/?selected_date={{date}}&selected_corp={{user.business_name}}' " target="_blank">다운로드</button></td>
               {%  endif %}
