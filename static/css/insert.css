@@ -141,5 +141,13 @@ td {
   text-align: center;
   width: 80%;
 }
-
+#datepicker {
+  font-size: 20px;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  #datepicker {
+    font-size: 12px;
+  }
+}
 /*# sourceMappingURL=insert.css.map */
